@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "iOSAppAdmins",
+    "slug": "iOSAppAdmins",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

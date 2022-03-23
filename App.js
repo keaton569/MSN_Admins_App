@@ -1,21 +1,103 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  MaterialCommunityIcons,
+  Feather,
+  Entypo,
+  Ionicons,
+} from "@expo/vector-icons";
 
-export default function App() {
+import HomeScreen from "./Pages/HomeScreen";
+import MoreScreen from "./Pages/MoreScreen";
+import PurchasesScreen from "./Pages/PurchasesScreen";
+import ContactsScreen from "./Pages/ContactsScreen";
+import AddContact from "./Pages/AddContactScreen";
+
+function ScheduleScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>Schedule!</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Tab = createBottomTabNavigator();
+const ContactsStack = createNativeStackNavigator();
+
+function ContactsStackScreen() {
+  return (
+    <ContactsStack.Navigator>
+      <ContactsStack.Screen name="Contacts Home" component={ContactsScreen} />
+      <ContactsStack.Screen name="Add Contact" component={AddContact} />
+    </ContactsStack.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: "Home",
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name={"home"} size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        />
+        {/* <Tab.Screen
+          name="Purchases"
+          component={PurchasesScreen}
+          options={{
+            tabBarLabel: "Purchases",
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name={"shopping-bag"} size={size} color={color} />
+            ),
+            headerShown: false,
+          }}
+        /> */}
+        <Tab.Screen
+          name="Contacts"
+          component={ContactsStackScreen}
+          options={{
+            tabBarLabel: "Contacts",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name={"cards"}
+                size={size}
+                color={color}
+              />
+            ),
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Schedule"
+          component={ScheduleScreen}
+          options={{
+            tabBarLabel: "Schedule",
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name={"calendar"} size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="More"
+          component={MoreScreen}
+          options={{
+            tabBarLabel: "More",
+            tabBarIcon: ({ color, size }) => (
+              <Feather name={"more-vertical"} size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}

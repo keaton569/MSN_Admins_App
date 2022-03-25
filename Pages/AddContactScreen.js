@@ -8,8 +8,27 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-export default function AddContact() {
+export default function AddContact({ navigation }) {
   const [contactInfo, setInfo] = useState({});
+
+  async function addContact() {
+    fetch("https://app.medspa.network/api/contacts/addContact", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contactInfo),
+    })
+      .then((res) => {
+        console.log(res.status);
+        if (res.status == 200) return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        navigation.navigate("Contacts", { screen: "Contacts Home" });
+      });
+  }
 
   return (
     <View style={styles.Container}>
@@ -24,7 +43,7 @@ export default function AddContact() {
                 contactInfo.firstName != undefined ? "green" : "red",
             },
           ]}
-          onChange={(text) => {
+          onChangeText={(text) => {
             setInfo((prevState) => ({ ...prevState, firstName: text }));
           }}
         />
@@ -37,11 +56,27 @@ export default function AddContact() {
             styles.RequiredField,
             {
               borderLeftColor:
-                contactInfo.firstName != undefined ? "green" : "red",
+                contactInfo.lastName != undefined ? "green" : "red",
             },
           ]}
-          onChange={(text) => {
+          onChangeText={(text) => {
             setInfo((prevState) => ({ ...prevState, lastName: text }));
+          }}
+        />
+      </View>
+      <View style={styles.TextInputContainer}>
+        <TextInput
+          placeholder="Phone Number"
+          placeholderTextColor={"dimgrey"}
+          style={[
+            styles.RequiredField,
+            {
+              borderLeftColor:
+                contactInfo.phoneNumber != undefined ? "green" : "red",
+            },
+          ]}
+          onChangeText={(text) => {
+            setInfo((prevState) => ({ ...prevState, phoneNumber: text }));
           }}
         />
       </View>
@@ -52,11 +87,10 @@ export default function AddContact() {
           style={[
             styles.RequiredField,
             {
-              borderLeftColor:
-                contactInfo.firstName != undefined ? "green" : "red",
+              borderLeftColor: contactInfo.email != undefined ? "green" : "red",
             },
           ]}
-          onChange={(text) => {
+          onChangeText={(text) => {
             setInfo((prevState) => ({ ...prevState, email: text }));
           }}
         />
@@ -69,10 +103,10 @@ export default function AddContact() {
             styles.RequiredField,
             {
               borderLeftColor:
-                contactInfo.firstName != undefined ? "green" : "red",
+                contactInfo.company != undefined ? "green" : "red",
             },
           ]}
-          onChange={(text) => {
+          onChangeText={(text) => {
             setInfo((prevState) => ({ ...prevState, company: text }));
           }}
         />
@@ -82,7 +116,7 @@ export default function AddContact() {
           placeholder="Other Info"
           placeholderTextColor={"dimgrey"}
           style={styles.InputField}
-          onChange={(text) => {
+          onChangeText={(text) => {
             setInfo((prevState) => ({ ...prevState, otherInfo: text }));
           }}
         />
@@ -93,6 +127,9 @@ export default function AddContact() {
       contactInfo.company != undefined ? (
         <TouchableOpacity
           style={[styles.Button, { backgroundColor: "#009688" }]}
+          onPress={() => {
+            addContact();
+          }}
         >
           <Text style={styles.ButtonText}>Submit</Text>
         </TouchableOpacity>
@@ -134,17 +171,19 @@ const styles = StyleSheet.create({
   RequiredField: {
     fontSize: 22,
     height: 50,
-    backgroundColor: "lightgrey",
-    borderRadius: 10,
+    backgroundColor: "white",
     padding: 10,
-    borderLeftWidth: 5,
+    borderLeftWidth: 2,
+    borderBottomColor: "grey",
+    borderBottomWidth: 2,
   },
   InputField: {
     fontSize: 22,
     height: 50,
-    backgroundColor: "lightgrey",
-    borderRadius: 10,
+    backgroundColor: "white",
     padding: 10,
+    borderBottomColor: "grey",
+    borderBottomWidth: 2,
   },
   RequiredText: {
     color: "red",

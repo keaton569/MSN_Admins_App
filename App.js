@@ -15,6 +15,7 @@ import MoreScreen from "./Pages/MoreScreen";
 import PurchasesScreen from "./Pages/PurchasesScreen";
 import ContactsScreen from "./Pages/ContactsScreen";
 import AddContact from "./Pages/AddContactScreen";
+import ViewContacts from "./Pages/ViewContactsScreen";
 
 function ScheduleScreen() {
   return (
@@ -32,6 +33,7 @@ function ContactsStackScreen() {
     <ContactsStack.Navigator>
       <ContactsStack.Screen name="Contacts Home" component={ContactsScreen} />
       <ContactsStack.Screen name="Add Contact" component={AddContact} />
+      <ContactsStack.Screen name="View Contacts" component={ViewContacts} />
     </ContactsStack.Navigator>
   );
 }

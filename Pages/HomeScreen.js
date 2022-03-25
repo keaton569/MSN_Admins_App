@@ -12,8 +12,12 @@ export default function MoreScreen() {
         </View>
         <View style={styles.LogoTextContainer}></View>
       </View> */}
-      <View>
-        <Text>Hey! Welcome Back</Text>
+      <View style={styles.WelcomeTextContainer}>
+        <Text style={styles.WelcomeText}>Hey, Welcome Back!</Text>
+        <Text>
+          This page is obviously not even started. Give me some ideas of things
+          to put here?
+        </Text>
       </View>
     </View>
   );
@@ -28,6 +32,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 40,
   },
+  WelcomeTextContainer: { marginTop: 20 },
+  WelcomeText: {
+    alignSelf: "stretch",
+    fontSize: 22,
+  },
   Header: {
     flexDirection: "row",
     height: 40,
@@ -36,6 +45,7 @@ const styles = StyleSheet.create({
     width: "50%",
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    marginTop: 20,
   },
   LogoTextContainer: {
     alignContent: "flex-end",

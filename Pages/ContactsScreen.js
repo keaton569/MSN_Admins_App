@@ -12,10 +12,12 @@ export default function ContactsScreen({ navigation }) {
         />
       </View>
       <View style={styles.Row}>
-        <Button title="View All Contacts" />
-      </View>
-      <View style={styles.Row}>
-        <Button title="Admin" />
+        <Button
+          title="View All Contacts"
+          onPress={() => {
+            navigation.navigate("View Contacts");
+          }}
+        />
       </View>
     </View>
   );
